@@ -15,7 +15,7 @@ router.get('/schema/get', async (ctx) => {
 router.get('/options/get', async (ctx) => {
   ctx.body = {
     code: 200,
-    data: storage.get('builtinSchema'),
+    data: storage.get('builtinOptions'),
   };
 });
 
