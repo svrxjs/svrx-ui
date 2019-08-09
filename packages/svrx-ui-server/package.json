@@ -1,0 +1,32 @@
+{
+  "name": "svrx-ui-server",
+  "version": "0.0.2",
+  "description": "UI server for svrx-ui",
+  "main": "index.js",
+  "dependencies": {
+    "find-free-port": "^2.0.0",
+    "koa": "^2.7.0",
+    "koa-combine-routers": "^4.0.2",
+    "koa-mount": "^4.0.0",
+    "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
+    "svrx-ui-client": "^0.0.2",
+    "svrx-util": "0.0.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/x-orpheus/svrx-ui.git"
+  },
+  "keywords": [
+    "svrx",
+    "ui",
+    "mock",
+    "dev-server"
+  ],
+  "author": "x-orpheus",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/x-orpheus/svrx-ui/issues"
+  },
+  "homepage": "https://svrx.gitbook.io/docs/"
+}
