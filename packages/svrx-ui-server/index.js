@@ -17,8 +17,8 @@ class UI {
     this.app = new Koa();
     this.port = options.port || PORT;
 
-    storage.set('builtinSchema', options.builtinSchema);
-    storage.set('builtinOptions', options.builtinOptions);
+    storage.set('builtins', options.builtins);
+    storage.set('plugins', options.plugins);
 
     this.app.use(router());
     this.app.use(koaStatic(BUILD_PATH));
