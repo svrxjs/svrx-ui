@@ -19,6 +19,7 @@ class UI {
 
     storage.set('builtins', options.builtins);
     storage.set('plugins', options.plugins);
+    storage.set('directory', options.directory);
 
     this.app.use(router());
     this.app.use(koaStatic(BUILD_PATH));
