@@ -12,4 +12,11 @@ router.get('/list/get', async (ctx) => {
   };
 });
 
+router.post('/option/set', async (ctx) => {
+  // todo
+  ctx.body = {
+    code: 200,
+  };
+});
+
 module.exports = router;
