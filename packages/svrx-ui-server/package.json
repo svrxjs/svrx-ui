@@ -12,7 +12,7 @@
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
     "svrx-ui-client": "^0.0.2",
-    "svrx-util": "0.0.6"
+    "@svrx/util": "^1.0.5"
   },
   "repository": {
     "type": "git",

@@ -1,3 +1,16 @@
 .App {
   text-align: center;
 }
+
+.header {
+  color: white;
+}
+
+.middle {
+  text-align: left;
+}
+
+.content {
+  padding: 20px;
+  background: white;
+}

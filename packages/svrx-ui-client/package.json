@@ -40,12 +40,16 @@
   "homepage": "https://svrx.gitbook.io/docs/",
   "dependencies": {
     "antd": "^3.20.7",
+    "prop-types": "^15.7.2",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "redux": "^4.0.4",
+    "redux-react-hook": "^3.3.2"
   },
   "devDependencies": {
     "babel-plugin-import": "^1.12.0",
     "customize-cra": "^0.4.1",
+    "eslint": "^5.16.0",
     "react-app-rewired": "^2.1.3",
     "react-scripts": "3.0.1"
   }

@@ -4,7 +4,7 @@ const koaStatic = require('koa-static');
 const koaMount = require('koa-mount');
 const koaBody = require('koa-body');
 const ffp = require('find-free-port');
-const { logger } = require('svrx-util');
+const { logger } = require('@svrx/util');
 const http = require('http');
 const router = require('./routes');
 const storage = require('./storage');
@@ -20,7 +20,7 @@ class UI {
 
     storage.set('builtins', options.builtins);
     storage.set('plugins', options.plugins);
-    storage.set('directory', options.directory);
+    storage.set('directory', options.directory.split(path.sep));
 
     this.app.use(koaBody());
     this.app.use(router());
