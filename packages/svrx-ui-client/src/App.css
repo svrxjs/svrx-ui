@@ -7,6 +7,7 @@
 }
 
 .middle {
+  margin-bottom: 70px;
   text-align: left;
 }
 
@@ -14,3 +15,16 @@
   padding: 20px;
   background: white;
 }
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  z-index: 1;
+  width: 100%;
+  padding-top: 0;
+}
+
+.footer .divider {
+  margin-top: 0;
+}
+

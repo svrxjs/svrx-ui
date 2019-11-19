@@ -26,6 +26,25 @@ const mock = {
       name: 'webpack',
     },
   ],
+  settings: {
+    registry: {
+      type: 'string',
+      description: 'the registry of npm',
+      group: 'CORE',
+    },
+    port: {
+      type: 'number',
+      default: 8000,
+      description: 'Specify a port number to listen for requests on',
+      group: 'CORE',
+    },
+    https: {
+      description: 'enable https',
+      type: 'boolean',
+      default: false,
+      group: 'CORE',
+    },
+  },
 };
 
 const footerItems = [
@@ -65,13 +84,13 @@ function App() {
             <Directory directoryArray={mock.directoryArray}/>
             <Content className="content">
               <MixedSearch results={mock.searchResults}/>
-              <Settings />
+              <Settings settings={mock.settings} />
             </Content>
           </Col>
         </Row>
       </Layout>
       <Footer className="footer">
-        <Divider />
+        <Divider className="divider" />
         {footer}
       </Footer>
     </Layout>
