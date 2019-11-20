@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Layout,
   Row,
@@ -7,45 +7,26 @@ import {
   Icon,
 } from 'antd';
 import Directory from './components/Directory';
-import MixedSearch from './components/MixedSearch';
+// import MixedSearch from './components/MixedSearch'; todo
 import Settings from './components/Settings';
 import './App.css';
+import { getDirectory } from './services';
 
 const { Header, Footer, Content } = Layout;
 
-const mock = {
-  directoryArray: ['home', 'cyxu', 'projects', 'temp', 'ui-empty-test'],
-  searchResults: [
-    {
-      type: 'setting',
-      name: 'port',
-      group: 'COMMON',
-    },
-    {
-      type: 'plugin',
-      name: 'webpack',
-    },
-  ],
-  settings: {
-    registry: {
-      type: 'string',
-      description: 'the registry of npm',
-      group: 'CORE',
-    },
-    port: {
-      type: 'number',
-      default: 8000,
-      description: 'Specify a port number to listen for requests on',
-      group: 'CORE',
-    },
-    https: {
-      description: 'enable https',
-      type: 'boolean',
-      default: false,
-      group: 'CORE',
-    },
-  },
-};
+// const mock = {
+//   searchResults: [
+//     {
+//       type: 'setting',
+//       name: 'port',
+//       group: 'COMMON',
+//     },
+//     {
+//       type: 'plugin',
+//       name: 'webpack',
+//     },
+//   ],
+// };
 
 const footerItems = [
   {
@@ -58,13 +39,15 @@ const footerItems = [
     name: 'Docs', icon: 'api', url: 'https://docs.svrx.io/',
   },
   {
-    name: 'Chat on Gitter', icon: 'message', url: 'https://gitter.im/svrxjs/svrx',
+    name: 'Chat on Gitter',
+    icon: 'message',
+    url: 'https://gitter.im/svrxjs/svrx',
   },
 ];
 const footer = footerItems.map((f, index) => (
   <span key={f.name}>
     <a href={f.url} target="_blank" rel="noopener noreferrer">
-      <Icon type={f.icon} />
+      <Icon type={f.icon}/>
       <span style={{ marginLeft: 5 }}>{f.name}</span>
     </a>
     {index === footerItems.length - 1
@@ -75,22 +58,31 @@ const footer = footerItems.map((f, index) => (
 ));
 
 function App() {
+  const [directoryArray, setDirectoryArray] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const arr = await getDirectory() || [];
+      setDirectoryArray(arr);
+    })();
+  }, []);
+
   return (
     <Layout className="App">
       <Header className="header">SVRX Settings</Header>
       <Layout className="middle">
         <Row>
           <Col span={18} offset={3}>
-            <Directory directoryArray={mock.directoryArray}/>
+            <Directory directoryArray={directoryArray}/>
             <Content className="content">
-              <MixedSearch results={mock.searchResults}/>
-              <Settings settings={mock.settings} />
+              {/* <MixedSearch results={mock.searchResults}/> */}
+              <Settings />
             </Content>
           </Col>
         </Row>
       </Layout>
       <Footer className="footer">
-        <Divider className="divider" />
+        <Divider className="divider"/>
         {footer}
       </Footer>
     </Layout>
