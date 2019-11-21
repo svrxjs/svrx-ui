@@ -12,11 +12,21 @@ router.get('/list/get', async (ctx) => {
   };
 });
 
-router.post('/option/set', async (ctx) => {
-  // todo
-  ctx.body = {
-    code: 200,
-  };
+router.post('/list/set', async (ctx) => {
+  const settings = ctx.request.body;
+  const configSet = storage.get('configSet');
+
+  try {
+    await configSet(settings);
+    ctx.body = {
+      code: 200,
+    };
+  } catch (e) {
+    ctx.body = {
+      code: 500,
+      message: e.message || 'Request error',
+    };
+  }
 });
 
 module.exports = router;

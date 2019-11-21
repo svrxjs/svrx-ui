@@ -3,13 +3,15 @@ import React, { useState, useEffect } from 'react';
 import RJSForm from 'react-jsonschema-form';
 import {
   Layout,
-  Tree,
+  // Tree,
+  message,
 } from 'antd';
-import { getBuiltins } from '../services';
+import { getBuiltins, setBuiltins } from '../services';
 import customFormStyle from '../utils/custom-form-style';
 
-const { Sider, Content } = Layout;
-const { TreeNode } = Tree;
+// const { Sider, Content } = Layout;
+const { Content } = Layout;
+// const { TreeNode } = Tree;
 
 const getGroups = (schema, values) => {
   const displayKeys = Object.keys(schema);
@@ -39,11 +41,17 @@ const lock = {
   status: false,
 };
 
+let saveTimer = null;
 const save = (group, settings) => {
-  const changed = settings[group];
-  // todo throttle？
-  console.log('===save===');
-  console.log(changed);
+  if (saveTimer) {
+    clearTimeout(saveTimer);
+    saveTimer = null;
+  }
+  saveTimer = setTimeout(async () => {
+    const changed = settings[group];
+    await setBuiltins(changed);
+    message.success('Settings changed!');
+  }, 500);
 };
 
 export default function Settings() {
@@ -90,33 +98,33 @@ export default function Settings() {
 
   return (
     <Layout style={{ margin: '20px 0', background: '#fff' }}>
-      <Sider
-        theme="light"
-        style={{
-          overflowY: 'auto',
-          height: '100%',
-          top: '20px',
-          position: 'sticky',
-        }}
-      >
-        <Tree
-          defaultExpandedKeys={['0-0-0', '0-0-1']}
-          defaultSelectedKeys={['0-0-0', '0-0-1']}
-          defaultCheckedKeys={['0-0-0', '0-0-1']}
-          // onSelect={this.onSelect}
-        >
-          <TreeNode title="parent 1" key="0-0">
-            <TreeNode title="parent 1-0" key="0-0-0" disabled>
-              <TreeNode title="to-do" key="0-0-0-0" disableCheckbox/>
-              <TreeNode title="leaf" key="0-0-0-1"/>
-            </TreeNode>
-            <TreeNode title="parent 1-1" key="0-0-1">
-              <TreeNode title={<span style={{ color: '#1890ff' }}>sss</span>}
-                        key="0-0-1-0"/>
-            </TreeNode>
-          </TreeNode>
-        </Tree>
-      </Sider>
+      {/* <Sider */}
+      {/*  theme="light" */}
+      {/*  style={{ */}
+      {/*    overflowY: 'auto', */}
+      {/*    height: '100%', */}
+      {/*    top: '20px', */}
+      {/*    position: 'sticky', */}
+      {/*  }} */}
+      {/* > */}
+      {/*  <Tree */}
+      {/*    defaultExpandedKeys={['0-0-0', '0-0-1']} */}
+      {/*    defaultSelectedKeys={['0-0-0', '0-0-1']} */}
+      {/*    defaultCheckedKeys={['0-0-0', '0-0-1']} */}
+      {/*    // onSelect={this.onSelect} */}
+      {/*  > */}
+      {/*    <TreeNode title="parent 1" key="0-0"> */}
+      {/*      <TreeNode title="parent 1-0" key="0-0-0" disabled> */}
+      {/*        <TreeNode title="to-do" key="0-0-0-0" disableCheckbox/> */}
+      {/*        <TreeNode title="leaf" key="0-0-0-1"/> */}
+      {/*      </TreeNode> */}
+      {/*      <TreeNode title="parent 1-1" key="0-0-1"> */}
+      {/*        <TreeNode title={<span style={{ color: '#1890ff' }}>sss</span>} */}
+      {/*                  key="0-0-1-0"/> */}
+      {/*      </TreeNode> */}
+      {/*    </TreeNode> */}
+      {/*  </Tree> */}
+      {/* </Sider> */}
       <Content
         style={{
           padding: 10,

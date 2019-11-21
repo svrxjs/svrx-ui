@@ -27,3 +27,13 @@ export function getBuiltins() {
 export function getPlugins() {
   return fetch('/api/plugin/list/get');
 }
+
+export function setBuiltins(data) {
+  return fetch('/api/builtin/list/set', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+}

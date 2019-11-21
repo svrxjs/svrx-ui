@@ -45,6 +45,7 @@ module.exports = {
           builtins: getBuiltins(config),
           plugins: getPlugins(config),
           directory: config.get('root'),
+          set: config.set,
         });
         ui.start().then((port) => {
           logger.notify(`svrx ui is started at http://localhost:${port}`);
