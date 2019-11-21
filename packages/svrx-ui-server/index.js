@@ -22,6 +22,7 @@ class UI {
     storage.set('plugins', options.plugins);
     storage.set('directory', options.directory.split(path.sep));
     storage.set('configSet', options.set);
+    storage.set('pluginSet', options.pluginSet);
 
     this.app.use(koaBody());
     this.app.use(router());

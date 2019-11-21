@@ -37,3 +37,14 @@ export function setBuiltins(data) {
     body: JSON.stringify(data),
   });
 }
+
+
+export function setPlugins(data) {
+  return fetch('/api/plugin/list/set', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+}

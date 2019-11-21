@@ -23,14 +23,13 @@ const getPlugins = (config) => {
       const schema = config.getPlugin(name).getSchema();
       const options = config.getPlugin(name).get();
       return {
-        name,
-        config: Object.keys(schema)
-          .map(key => ({
-            key,
-            schema: schema[key],
-            value: options[key],
-          }))
-          .filter(schemaFilter),
+        key: name,
+        schema: {
+          type: 'object',
+          group: 'Plugin',
+          properties: schema,
+        },
+        value: options,
       };
     });
 };
@@ -45,7 +44,8 @@ module.exports = {
           builtins: getBuiltins(config),
           plugins: getPlugins(config),
           directory: config.get('root'),
-          set: config.set,
+          set: config.builtinsSet,
+          pluginSet: config.pluginsSet,
         });
         ui.start().then((port) => {
           logger.notify(`svrx ui is started at http://localhost:${port}`);

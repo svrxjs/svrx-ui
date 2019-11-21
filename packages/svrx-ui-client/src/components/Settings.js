@@ -6,34 +6,46 @@ import {
   // Tree,
   message,
 } from 'antd';
-import { getBuiltins, setBuiltins } from '../services';
+import {
+  getBuiltins as getBuiltinsService,
+  setBuiltins as setBuiltinsService,
+  getPlugins as getPluginsService,
+  setPlugins as setPluginsService,
+} from '../services';
 import customFormStyle from '../utils/custom-form-style';
 
 // const { Sider, Content } = Layout;
 const { Content } = Layout;
 // const { TreeNode } = Tree;
 
-const getGroups = (schema, values) => {
-  const displayKeys = Object.keys(schema);
-  const groups = {};
+const getProperties = (array = []) => {
+  const schema = {};
+  const values = {};
+  array.forEach((b) => {
+    schema[b.key] = b.schema;
+    values[b.key] = b.value;
+  });
 
-  displayKeys.forEach((key) => {
-    const groupName = schema[key].group || 'Others';
-    if (!groups[groupName]) {
-      groups[groupName] = {
+  const keys = Object.keys(schema);
+  const properties = {};
+
+  keys.forEach((key) => {
+    const name = schema[key].group || 'Others';
+    if (!properties[name]) {
+      properties[name] = {
         schema: {
           type: 'object',
-          title: groupName,
+          title: name,
           properties: {},
         },
         values: {},
       };
     }
-    groups[groupName].schema.properties[key] = schema[key];
-    groups[groupName].values[key] = values[key];
+    properties[name].schema.properties[key] = schema[key];
+    properties[name].values[key] = values[key];
   });
 
-  return groups;
+  return properties;
 };
 
 const lock = {
@@ -49,14 +61,18 @@ const save = (group, settings) => {
   }
   saveTimer = setTimeout(async () => {
     const changed = settings[group];
-    await setBuiltins(changed);
+    if (group === 'Plugin') {
+      await setPluginsService(changed);
+    } else {
+      await setBuiltinsService(changed);
+    }
     message.success('Settings changed!');
   }, 500);
 };
 
 export default function Settings() {
-  const [builtinSchema, setBuiltinSchema] = useState({});
-  const [builtinValues, setBuiltinValues] = useState({});
+  const [builtins, setBuiltins] = useState([]);
+  const [plugins, setPlugins] = useState([]);
   const settings = {};
 
   /* handlers */
@@ -81,20 +97,14 @@ export default function Settings() {
   /* fetch data */
   useEffect(() => {
     (async () => {
-      const builtins = await getBuiltins() || [];
-      const schema = {};
-      const values = {};
-
-      builtins.forEach((b) => {
-        schema[b.key] = b.schema;
-        values[b.key] = b.value;
-      });
-
-      setBuiltinSchema(schema);
-      setBuiltinValues(values);
+      /* builtins */
+      const builtinsResp = await getBuiltinsService() || [];
+      setBuiltins(builtinsResp);
+      const pluginsResp = await getPluginsService() || [];
+      setPlugins(pluginsResp);
     })();
   }, []);
-  const groups = getGroups(builtinSchema, builtinValues);
+  const groups = getProperties([...builtins, ...plugins]);
 
   return (
     <Layout style={{ margin: '20px 0', background: '#fff' }}>

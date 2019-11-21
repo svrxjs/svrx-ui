@@ -12,4 +12,21 @@ router.get('/list/get', async (ctx) => {
   };
 });
 
+router.post('/list/set', async (ctx) => {
+  const settings = ctx.request.body;
+  const pluginSet = storage.get('pluginSet');
+
+  try {
+    await pluginSet(settings);
+    ctx.body = {
+      code: 200,
+    };
+  } catch (e) {
+    ctx.body = {
+      code: 500,
+      message: e.message || 'Request error',
+    };
+  }
+});
+
 module.exports = router;
