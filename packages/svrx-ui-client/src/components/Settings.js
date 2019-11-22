@@ -54,19 +54,22 @@ const lock = {
 };
 
 let saveTimer = null;
-const save = (group, settings) => {
+const save = (form, group, settings) => {
   if (saveTimer) {
     clearTimeout(saveTimer);
     saveTimer = null;
   }
   saveTimer = setTimeout(async () => {
+    const { state: { errors } } = form;
+    if (errors && errors.length > 0) return;
+
     const changed = settings[group];
-    if (group === 'Plugin') {
-      await setPluginsService(changed);
-    } else {
-      await setBuiltinsService(changed);
+    const result = group === 'Plugin'
+      ? await setPluginsService(changed)
+      : await setBuiltinsService(changed);
+    if (result !== null) {
+      message.success('Settings changed!');
     }
-    message.success('Settings changed!');
   }, 500);
 };
 
@@ -74,6 +77,7 @@ export default function Settings() {
   const [builtins, setBuiltins] = useState([]);
   const [plugins, setPlugins] = useState([]);
   const settings = {};
+  const forms = {};
 
   /* handlers */
   const handleFormFocus = (group, id) => {
@@ -84,13 +88,13 @@ export default function Settings() {
     if (lock.id === id) {
       lock.status = false;
       lock.id = null;
-      save(group, settings);
+      save(forms[group], group, settings);
     }
   };
   const handleFormChange = (group, formData) => {
     settings[group] = formData;
     if (!lock.status) {
-      save(group, settings);
+      save(forms[group], group, settings);
     }
   };
 
@@ -99,9 +103,13 @@ export default function Settings() {
     (async () => {
       /* builtins */
       const builtinsResp = await getBuiltinsService() || [];
-      setBuiltins(builtinsResp);
+      if (builtinsResp) {
+        setBuiltins(builtinsResp);
+      }
       const pluginsResp = await getPluginsService() || [];
-      setPlugins(pluginsResp);
+      if (pluginsResp) {
+        setPlugins(pluginsResp);
+      }
     })();
   }, []);
   const groups = getProperties([...builtins, ...plugins]);
@@ -143,12 +151,16 @@ export default function Settings() {
         {Object.keys(groups).map(key => (
           <RJSForm
             key={key}
+            liveValidate={true}
+            omitExtraData={true}
+            liveOmit={true}
             schema={groups[key].schema}
             formData={groups[key].values}
             {...customFormStyle}
             onChange={({ formData }) => handleFormChange(key, formData)}
             onFocus={id => handleFormFocus(key, id)}
             onBlur={id => handleFormBlur(key, id)}
+            ref={(form) => { forms[key] = form; }}
           >
             <button style={{ display: 'none' }}/>
           </RJSForm>

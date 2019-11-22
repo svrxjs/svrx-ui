@@ -14,10 +14,10 @@ router.get('/list/get', async (ctx) => {
 
 router.post('/list/set', async (ctx) => {
   const settings = ctx.request.body;
-  const configSet = storage.get('configSet');
+  const builtinSet = storage.get('builtinSet');
 
   try {
-    await configSet(settings);
+    await builtinSet(settings);
     ctx.body = {
       code: 200,
     };
