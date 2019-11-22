@@ -69,7 +69,7 @@ function App() {
 
   return (
     <Layout className="App">
-      <Header className="header">SVRX Settings</Header>
+      <Header className="header">Server-X Settings</Header>
       <Layout className="middle">
         <Row>
           <Col span={18} offset={3}>
