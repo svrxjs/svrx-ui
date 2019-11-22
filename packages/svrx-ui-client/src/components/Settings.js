@@ -18,6 +18,30 @@ import customFormStyle from '../utils/custom-form-style';
 const { Content } = Layout;
 // const { TreeNode } = Tree;
 
+const formSchema = (schema = {}) => {
+  const {
+    type, properties, anyOf, additionalProperties, items,
+  } = schema;
+
+  if (anyOf) {
+    schema.anyOf = anyOf.map(one => formSchema(one));
+  }
+  if (type === 'object') {
+    if (!properties && !additionalProperties) {
+      schema.additionalProperties = { type: 'string' };
+    } else {
+      const newProperties = {};
+      Object.keys(properties || {}).forEach((o) => {
+        newProperties[o] = formSchema(properties[o]);
+      });
+      schema.properties = newProperties;
+    }
+  }
+  if (type === 'array') {
+    schema.items = formSchema(items);
+  }
+  return schema;
+};
 const getProperties = (array = []) => {
   const schema = {};
   const values = {};
@@ -41,7 +65,7 @@ const getProperties = (array = []) => {
         values: {},
       };
     }
-    properties[name].schema.properties[key] = schema[key];
+    properties[name].schema.properties[key] = formSchema(schema[key]);
     properties[name].values[key] = values[key];
   });
 
@@ -152,8 +176,6 @@ export default function Settings() {
           <RJSForm
             key={key}
             liveValidate={true}
-            omitExtraData={true}
-            liveOmit={true}
             schema={groups[key].schema}
             formData={groups[key].values}
             {...customFormStyle}
