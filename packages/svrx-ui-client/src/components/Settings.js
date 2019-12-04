@@ -14,6 +14,7 @@ import {
 } from '../services';
 import customFormStyle from '../utils/custom-form-style';
 
+// fixme testanyof key删除报错
 // const { Sider, Content } = Layout;
 const { Content } = Layout;
 // const { TreeNode } = Tree;
@@ -71,7 +72,69 @@ const getProperties = (array = []) => {
 
   return properties;
 };
+const stringifyObject = (value) => {
+  if (typeof value === 'object') return JSON.stringify(value);
+  return value;
+};
+const encodeAdditionalObject = (schema, values) => {
+  if (values === undefined || values === null) return values;
+  const {
+    type, anyOf, properties, additionalProperties, items,
+  } = schema;
+  if (type !== 'object' && type !== 'array' && !anyOf) return values;
 
+  if (type === 'object') {
+    if (additionalProperties) {
+      const newValues = {};
+      Object.keys(values).forEach((key) => {
+        newValues[key] = stringifyObject(values[key]);
+      });
+      return newValues;
+    }
+    if (properties) {
+      const newValues = {};
+      Object.keys(properties).forEach((key) => {
+        newValues[key] = encodeAdditionalObject(properties[key], values[key]);
+      });
+      return newValues;
+    }
+  }
+  if (type === 'array') {
+    if (!items) return values;
+    return values.map(v => encodeAdditionalObject(items, v));
+  }
+  if (anyOf) {
+    const fetchSchema = ty => anyOf.find(a => a.type === ty);
+    if (typeof values === 'object') { // object and array
+      if (Array.isArray(values)) {
+        return encodeAdditionalObject(fetchSchema('array'), values);
+      }
+      return encodeAdditionalObject(fetchSchema('object'), values);
+    }
+  }
+
+  return values;
+};
+const decodeAdditionalObject = (value) => {
+  const type = typeof value;
+
+  if (type === 'string') {
+    let newVal = null;
+    try {
+      newVal = JSON.parse(value);
+    } catch (e) {
+      // swallow
+    }
+    return newVal === null ? value : newVal;
+  }
+  if (type !== 'object') return value;
+  if (Array.isArray(value)) return value.map(v => decodeAdditionalObject(v));
+  const newVal = {};
+  Object.keys(value).forEach((key) => {
+    newVal[key] = decodeAdditionalObject(value[key]);
+  });
+  return newVal;
+};
 const lock = {
   id: null,
   status: false,
@@ -79,6 +142,7 @@ const lock = {
 
 let saveTimer = null;
 const save = (form, group, settings) => {
+  if (!form) return;
   if (saveTimer) {
     clearTimeout(saveTimer);
     saveTimer = null;
@@ -87,7 +151,7 @@ const save = (form, group, settings) => {
     const { state: { errors } } = form;
     if (errors && errors.length > 0) return;
 
-    const changed = settings[group];
+    const changed = decodeAdditionalObject(settings[group]);
     const result = group === 'Plugin'
       ? await setPluginsService(changed)
       : await setBuiltinsService(changed);
@@ -136,7 +200,20 @@ export default function Settings() {
       }
     })();
   }, []);
-  const groups = getProperties([...builtins, ...plugins]);
+
+  // groups: {Core:{schema,values},Common:{schema,values},...}
+  const groups = (() => {
+    const groupsOri = getProperties([...builtins, ...plugins]);
+    const newgroups = {};
+    Object.keys(groupsOri).forEach((key) => {
+      const { schema, values } = groupsOri[key];
+      newgroups[key] = {
+        schema,
+        values: encodeAdditionalObject(schema, values),
+      };
+    });
+    return newgroups;
+  })();
 
   return (
     <Layout style={{ margin: '20px 0', background: '#fff' }}>
