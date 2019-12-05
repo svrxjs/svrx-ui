@@ -14,7 +14,6 @@ import {
 } from '../services';
 import customFormStyle from '../utils/custom-form-style';
 
-// fixme testanyof key删除报错
 // const { Sider, Content } = Layout;
 const { Content } = Layout;
 // const { TreeNode } = Tree;
@@ -24,6 +23,7 @@ const formSchema = (schema = {}) => {
     type, properties, anyOf, additionalProperties, items,
   } = schema;
 
+  delete schema.default;
   if (anyOf) {
     schema.anyOf = anyOf.map(one => formSchema(one));
   }
