@@ -21,12 +21,20 @@ const getPlugins = (config) => {
     .filter(name => name !== 'ui')
     .map((name) => {
       const schema = config.getPlugin(name).getSchema();
+      const required = [];
+      Object.keys(schema).forEach((key) => {
+        if (schema[key].required) {
+          required.push(key);
+          delete schema[key].required;
+        }
+      });
       const options = config.getPlugin(name).get();
       return {
         key: name,
         schema: {
           type: 'object',
           group: 'Plugin',
+          required,
           properties: schema,
         },
         value: options,
