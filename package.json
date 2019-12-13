@@ -3,6 +3,7 @@
   "description": "UI tool for svrx",
   "private": true,
   "scripts": {
+    "build": "lerna run build",
     "lint": "eslint \"**/*.js\"",
     "fix": "eslint \"**/*.js\" --fix",
     "test": "lerna run test",
