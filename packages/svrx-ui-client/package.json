@@ -24,7 +24,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/x-orpheus/svrx-ui.git"
+    "url": "git+https://github.com/svrxjs/svrx-ui.git"
   },
   "keywords": [
     "svrx",
@@ -32,12 +32,12 @@
     "mock",
     "dev-server"
   ],
-  "author": "x-orpheus",
+  "author": "C.Y.Xu<itsxcy@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/x-orpheus/svrx-ui/issues"
+    "url": "https://github.com/svrxjs/svrx-ui/issues"
   },
-  "homepage": "https://svrx.gitbook.io/docs/",
+  "homepage": "https://svrx.io/",
   "dependencies": {
     "antd": "^3.20.7",
     "prop-types": "^15.7.2",

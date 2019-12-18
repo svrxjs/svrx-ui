@@ -5,14 +5,14 @@
   "main": "index.js",
   "scripts": {},
   "engines": {
-    "svrx": "^1.0.5"
+    "svrx": "^1.1.0"
   },
   "keywords": [
     "svrx",
     "svrx-plugin",
     "ui"
   ],
-  "author": "x-orpheus",
+  "author": "C.Y.Xu<itsxcy@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "svrx-ui": "^0.0.2"
