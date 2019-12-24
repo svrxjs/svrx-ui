@@ -1,0 +1,25 @@
+{
+  "name": "svrx-ui",
+  "version": "0.0.2",
+  "description": "UI tool for svrx",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/svrxjs/svrx-ui.git"
+  },
+  "keywords": [
+    "svrx",
+    "ui",
+    "mock",
+    "dev-server"
+  ],
+  "author": "C.Y.Xu<itsxcy@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/svrxjs/svrx-ui/issues"
+  },
+  "homepage": "https://svrx.io/",
+  "dependencies": {
+    "svrx-ui-server": "^0.0.2"
+  }
+}

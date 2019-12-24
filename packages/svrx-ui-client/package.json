@@ -1,0 +1,56 @@
+{
+  "name": "svrx-ui-client",
+  "version": "0.0.2",
+  "description": "UI client for svrx-ui",
+  "scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test"
+  },
+  "files": [
+    "build"
+  ],
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/svrxjs/svrx-ui.git"
+  },
+  "keywords": [
+    "svrx",
+    "ui",
+    "mock",
+    "dev-server"
+  ],
+  "author": "C.Y.Xu<itsxcy@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/svrxjs/svrx-ui/issues"
+  },
+  "homepage": "https://svrx.io/",
+  "dependencies": {
+    "antd": "^3.20.7",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-jsonschema-form": "^2.0.0-alpha.1",
+    "whatwg-fetch": "^3.0.0"
+  },
+  "devDependencies": {
+    "babel-plugin-import": "^1.12.0",
+    "customize-cra": "^0.4.1",
+    "eslint": "^5.16.0",
+    "react-app-rewired": "^2.1.3",
+    "react-scripts": "3.0.1"
+  }
+}
