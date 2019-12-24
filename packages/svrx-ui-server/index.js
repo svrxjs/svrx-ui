@@ -11,7 +11,9 @@ const storage = require('./storage');
 
 const PORT = 3000;
 const NOOP = () => {};
-const BUILD_PATH = path.join(__dirname, 'node_modules/svrx-ui-client/build');
+
+const CLIENT_PATH = require.resolve('svrx-ui-client');
+const BUILD_PATH = path.join(CLIENT_PATH, '../build');
 
 class UI {
   constructor(options = {}) {
