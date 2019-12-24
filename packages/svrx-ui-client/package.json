@@ -1,6 +1,6 @@
 {
   "name": "svrx-ui-client",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "UI client for svrx-ui",
   "scripts": {
     "start": "react-app-rewired start",
