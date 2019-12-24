@@ -1,6 +1,6 @@
 {
   "name": "svrx-plugin-ui",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "ui plugin for server-x",
   "main": "index.js",
   "engines": {
@@ -14,6 +14,6 @@
   "author": "C.Y.Xu<itsxcy@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "svrx-ui": "^0.1.0"
+    "svrx-ui": "^0.1.1"
   }
 }
