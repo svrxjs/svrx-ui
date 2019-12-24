@@ -3,7 +3,6 @@
   "version": "0.0.2",
   "description": "ui plugin for server-x",
   "main": "index.js",
-  "scripts": {},
   "engines": {
     "svrx": "^1.1.4"
   },
