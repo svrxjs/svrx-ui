@@ -25,7 +25,7 @@ const formSchema = (schema = {}) => {
 
   delete schema.default;
   if (anyOf) {
-    schema.anyOf = anyOf.map(one => formSchema(one));
+    schema.anyOf = anyOf.map((one) => formSchema(one));
   }
   if (type === 'object') {
     if (!properties && !additionalProperties) {
@@ -101,10 +101,10 @@ const encodeAdditionalObject = (schema, values) => {
   }
   if (type === 'array') {
     if (!items) return values;
-    return values.map(v => encodeAdditionalObject(items, v));
+    return values.map((v) => encodeAdditionalObject(items, v));
   }
   if (anyOf) {
-    const fetchSchema = ty => anyOf.find(a => a.type === ty);
+    const fetchSchema = (ty) => anyOf.find((a) => a.type === ty);
     if (typeof values === 'object') { // object and array
       if (Array.isArray(values)) {
         return encodeAdditionalObject(fetchSchema('array'), values);
@@ -128,7 +128,7 @@ const decodeAdditionalObject = (value) => {
     return newVal === null ? value : newVal;
   }
   if (type !== 'object') return value;
-  if (Array.isArray(value)) return value.map(v => decodeAdditionalObject(v));
+  if (Array.isArray(value)) return value.map((v) => decodeAdditionalObject(v));
   const newVal = {};
   Object.keys(value).forEach((key) => {
     newVal[key] = decodeAdditionalObject(value[key]);
@@ -249,7 +249,7 @@ export default function Settings() {
           padding: 10,
         }}
       >
-        {Object.keys(groups).map(key => (
+        {Object.keys(groups).map((key) => (
           <RJSForm
             key={key}
             liveValidate={true}
@@ -257,8 +257,8 @@ export default function Settings() {
             formData={groups[key].values}
             {...customFormStyle}
             onChange={({ formData }) => handleFormChange(key, formData)}
-            onFocus={id => handleFormFocus(key, id)}
-            onBlur={id => handleFormBlur(key, id)}
+            onFocus={(id) => handleFormFocus(key, id)}
+            onBlur={(id) => handleFormBlur(key, id)}
             ref={(form) => { forms[key] = form; }}
           >
             <button style={{ display: 'none' }}/>
