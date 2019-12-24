@@ -8,10 +8,10 @@ const { Option } = Select;
 
 export default function MixedSearch(props) {
   const { results } = props;
-  const settingOptions = results.filter(d => d.type === 'setting')
-    .map(d => <Option key={d.name}>{d.name}</Option>);
-  const pluginOptions = results.filter(d => d.type === 'plugin')
-    .map(d => <Option key={d.name}>{d.name}</Option>);
+  const settingOptions = results.filter((d) => d.type === 'setting')
+    .map((d) => <Option key={d.name}>{d.name}</Option>);
+  const pluginOptions = results.filter((d) => d.type === 'plugin')
+    .map((d) => <Option key={d.name}>{d.name}</Option>);
 
   return (
     <Select

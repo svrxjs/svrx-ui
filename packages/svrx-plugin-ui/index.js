@@ -1,6 +1,6 @@
 const SvrxUI = require('svrx-ui');
 
-const schemaFilter = config => config.schema.type !== 'function' && config.schema.type !== 'compute'
+const schemaFilter = (config) => config.schema.type !== 'function' && config.schema.type !== 'compute'
   && config.schema.ui !== false;
 
 const getBuiltins = (config) => {
@@ -8,7 +8,7 @@ const getBuiltins = (config) => {
   const options = config.get();
 
   return Object.keys(schema)
-    .map(key => ({
+    .map((key) => ({
       key,
       schema: schema[key],
       value: options[key],
