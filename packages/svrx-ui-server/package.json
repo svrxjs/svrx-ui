@@ -1,6 +1,6 @@
 {
   "name": "svrx-ui-server",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "UI server for svrx-ui",
   "main": "index.js",
   "dependencies": {
@@ -12,7 +12,7 @@
     "koa-mount": "^4.0.0",
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
-    "svrx-ui-client": "^0.1.0"
+    "svrx-ui-client": "^0.1.1"
   },
   "repository": {
     "type": "git",
