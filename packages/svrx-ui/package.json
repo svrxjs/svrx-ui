@@ -1,6 +1,6 @@
 {
   "name": "svrx-ui",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "UI tool for svrx",
   "main": "index.js",
   "repository": {
@@ -20,6 +20,6 @@
   },
   "homepage": "https://svrx.io/",
   "dependencies": {
-    "svrx-ui-server": "^0.0.2"
+    "svrx-ui-server": "^0.1.0"
   }
 }
